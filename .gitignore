@@ -1,0 +1,13 @@
+# Custom
+.env
+evn/
+node_modules/
+
+# IDE
+.idea/
+out/
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride

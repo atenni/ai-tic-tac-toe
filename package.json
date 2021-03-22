@@ -1,0 +1,41 @@
+{
+  "name": "ai-tic-tac-toe",
+  "version": "0.1.0",
+  "description": "Unbeatable Tic Tac Toe game, implemented entirely in vanilla Javascript.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "snowpack dev --verbose",
+    "build": "snowpack build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atenni/ai-tic-tac-toe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/atenni/ai-tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/atenni/ai-tic-tac-toe#readme",
+  "devDependencies": {
+    "snowpack": "^3.1.2"
+  },
+  "snowpack": {
+    "mount": {
+      "src": "/"
+    },
+    "exclude": [
+      "**/node_modules/**/*",
+      "**/.idea/**/*",
+      "**/.git/**/*"
+    ],
+    "devOptions": {
+      "open": "chrome"
+    },
+    "buildOptions": {
+      "out": "website"
+    }
+  }
+}
