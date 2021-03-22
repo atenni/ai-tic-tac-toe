@@ -35,7 +35,7 @@
       "open": "chrome"
     },
     "buildOptions": {
-      "out": "website"
+      "out": "docs"
     }
   }
 }
