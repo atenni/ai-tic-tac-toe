@@ -7,30 +7,26 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="description" content="Unbeatable Tic Tac Toe game, implemented entirely in vanilla Javascript." />
   <title>Unbeatable Tic Tac Toe</title>
-  <script type="module" src="index.js"></script>
-  <link rel="stylesheet" href="index.css" />
+  <script type="module" src="js/index.js"></script>
+  <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
-  <section id=in>
-    <div id=board>
-      <button id=1></button>
-      <button id=2></button>
-      <button id=3></button>
-      <button id=4></button>
-      <button id=5></button>
-      <button id=6></button>
-      <button id=7></button>
-      <button id=8></button>
-      <button id=9></button>
+  <section class="ttt">
+    <button class="ttt__action">
+      <span class="ttt__feedback">Feedback…</span>
+      <span class="ttt__actiontext">Click me</span>
+    </button>
+    <div class="ttt__board">
+      <button>x</button>
+      <button>o</button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button></button>
+      <button>x</button>
     </div>
-
-    <button id=reset>Start again</button>
   </section>
-
-  <section id=out>
-    <h2>Results</h2>
-    <ol></ol>
-  </section>
-
 </body>
 </html>
