@@ -1,13 +1,25 @@
 # Custom
 .env
-evn/
-node_modules/
+env
+node_modules
+dist
+dist-ssr
+*.local
 
-# IDE
-.idea/
-out/
+# Logs
+logs
+*.logs
+npm-debug.log*
 
-# OS
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 .AppleDouble
 .LSOverride
