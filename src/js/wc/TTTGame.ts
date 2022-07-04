@@ -4,7 +4,7 @@
  *  - Add reset button
  */
 import sounds from "../sounds.js";
-import { TTTSquare } from "./tttSquare.js";
+import { TTTSquare } from "./TTTSquare.js";
 import getAIMove from "../AIEngine.js";
 
 export interface Move {
