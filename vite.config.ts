@@ -5,5 +5,6 @@ export default defineConfig({
   base: "/ai-tic-tac-toe/",
   build: {
     outDir: "../docs",
+    emptyOutDir: true,
   },
 });
