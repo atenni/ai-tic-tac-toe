@@ -1,32 +1,36 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <meta name="description" content="Unbeatable Tic Tac Toe game, implemented entirely in vanilla Javascript." />
   <title>Unbeatable Tic Tac Toe</title>
-  <script type="module" src="js/index.js"></script>
-  <link rel="stylesheet" href="css/index.css" />
+  <!-- Load web components -->
+  <script type="module" src="/js/wc/index.ts"></script>
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="/css/index.css" />
 </head>
+
 <body>
-  <section class="ttt">
-    <button class="ttt__action">
-      <span class="ttt__feedback">Feedback…</span>
-      <span class="ttt__actiontext">Click me</span>
-    </button>
-    <div class="ttt__board">
-      <button>x</button>
-      <button>o</button>
-      <button></button>
-      <button></button>
-      <button></button>
-      <button></button>
-      <button></button>
-      <button></button>
-      <button>x</button>
-    </div>
-  </section>
+  <theme-selector></theme-selector>
+  <ttt-game>
+    <ttt-scoreboard slot="scoreboard"></ttt-scoreboard>
+    <ttt-board slot="board">
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+      <ttt-square value="" slot="square"></ttt-square>
+    </ttt-board>
+    <p slot="feedback"></p>
+    <button slot="reset" type="button">Reset board</button>
+  </ttt-game>
 </body>
+
 </html>
