@@ -1,0 +1,44 @@
+name: Build and deploy static site
+
+on:
+  push:
+    branches:
+      # Switch this to `main` after testing
+      - "gh-actions-website"
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      
+      - name: Install deps
+        run: npm ci
+      
+      - name: Build static site
+        run: npm run build
+      
+      - name: Init new repo in ./docs and commit built files
+        run: |
+          cd ./docs
+          git init
+          git add -A
+          git config --local user.email "action@github.com"
+          git config --local user.name "GutHub Action"
+          git commit -m "build and deploy static site"
+      
+      - name: Force push to static site branch
+        uses: ad-m/github-push-action@v0.6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: www
+          force: true
+          directory: ./docs
