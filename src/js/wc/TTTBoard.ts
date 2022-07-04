@@ -1,4 +1,4 @@
-import { TTTSquare } from "./tttSquare.js";
+import { TTTSquare } from "./TTTSquare.js";
 
 const styles = `
   section {
