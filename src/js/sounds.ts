@@ -12,7 +12,6 @@ class Sounds {
     this.masterGain = this.ctx.createGain();
     this.masterGain.gain.setValueAtTime(0.15, 0);
     this.masterGain.connect(this.ctx.destination);
-    console.log("constructor");
   }
 
   click(type?: "heavy") {

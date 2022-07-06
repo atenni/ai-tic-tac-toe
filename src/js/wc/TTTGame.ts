@@ -1,8 +1,3 @@
-/**
- * TODO:
- *  - Prevent already played squares from being updated
- *  - Add reset button
- */
 import sounds from "../sounds.js";
 import { TTTSquare } from "./TTTSquare.js";
 import getAIMove from "../AIEngine.js";
@@ -14,35 +9,51 @@ export interface Move {
 
 const styles = `
   :host {
+    --square-gap: max(0.4rem, 1vmin);
+    --game-padding:
+        max(1rem, 5vw)
+        max(2rem, 5vw);
+  }
+
+  :host {
     background-color: var(--gray-100);
     border: 1px solid var(--game-border-color);
     box-shadow: var(--game-box-shadow);
-    padding: 2rem 3rem;
+    padding: var(--game-padding);
+    width: max(220px, 45vmin);
+    // max-height: 75vh;
+    // height: clamp(423px, 0vh, 75vh);
+    transform: translateY(-2.5vh);
+
   }
 
   :host([data-current-player="x"]) {
-    --bg-player-x: var(--gray-300);
+    --bg-player-x: var(--gray-200);
+    --border-player-x: 1px solid var(--gray-300);
+
     --bg-player-o: transparent;
-    
-    --border-player-x: 1px solid var(--gray-200);
     --border-player-o: none;
   }
 
   :host([data-current-player="o"]) {
     --bg-player-x: transparent;
-    --bg-player-o: var(--gray-300);
-
     --border-player-x: none;
-    --border-player-o: 1px solid var(--gray-200);
+
+    --bg-player-o: var(--gray-200);
+    --border-player-o: 1px solid var(--gray-300);
   }
 
   ::slotted([slot="feedback"]) {
+    font-size: max(0.9rem, 1.5vmin);
+    margin: max(0.5rem, 1.5vmin) 0;
     text-align: center;
+    color: var(--gray-600);
+    font-style: italic;
   }
   
   ::slotted([slot="reset"]) {
     width: 100%;
-    font-size: 0.8rem;
+    font-size: max(0.8rem, 1.5vmin);
     text-transform: uppercase;
     letter-spacing: 0.4rem;
 
@@ -65,7 +76,7 @@ const styles = `
 class TTTGame extends HTMLElement {
   game: GamePlay;
   welcomeMessages = [
-    "Welcome to Tic Tac Toe! It's your turn.",
+    "Welcome! Let's play Tic-Tac-Toe!",
     "Click on a square to start.",
     "Good luck!",
     "Have fun!",

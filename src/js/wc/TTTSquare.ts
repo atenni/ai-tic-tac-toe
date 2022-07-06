@@ -9,17 +9,15 @@
 
 const styles = `
 button {
-  --square-size: 100px;
-
   color: var(--gray-800);
-  background: var(--gray-0);
-
-  width: var(--square-size);  /* Might not be necessary if using grid */
-  height: var(--square-size);
+  background: var(--gray-50);
+  width: 100%;
+  aspect-ratio: 1;
   border: 1px solid black;
-  padding: 0.5rem;
+  padding: 0;
+  margin: 0;
 
-  font-size: calc(var(--square-size) * 0.5);
+  font-size: 2.5rem;
 
   transition: background-color 1s; /* Transition to this state */
 }
@@ -55,7 +53,7 @@ export class TTTSquare extends HTMLElement {
         "button",
       );
 
-      buttonElm!.textContent = this.xoMap.get(newVal) ?? null;
+      buttonElm!.innerHTML = this.xoMap.get(newVal) ?? "&nbsp;";
     }
   }
 }
