@@ -1,15 +1,13 @@
 import { TTTSquare } from "./TTTSquare.js";
 
 const styles = `
-  section {
+  :host {
     display: grid;
-    grid-template-areas:
-      ". . ."
-      ". . ."
-      ". . .";
-    gap: 0.5rem;
-
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: var(--square-gap);
   }
+
 `;
 
 class TTTBoard extends HTMLElement {

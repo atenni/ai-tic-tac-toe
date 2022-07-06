@@ -1,48 +1,52 @@
 const styles = `
   h1 {
-    font-size: 2.25rem;
+    font-size: max(2rem, 6vmin);
     letter-spacing: 0.1rem;
     color: var(--gray-900);
     text-align: center;
     margin: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 2.5vh;
     text-transform: uppercase;
     font-weight: 100;
   }
 
   h2 {
     color: var(--gray-800);
-    font-weight: 400;
-    margin: 0;
-    margin-bottom: 0.25rem;
+    font-size: max(0.9rem, 2vmin);
+    font-weight: 800;
+    text-transform: uppercase;
+    padding: 0.25rem 1rem;
+    margin: 0 0 0.25rem 0;
+    border-radius: 10rem;
+
+    transition: background-color 0.5s ease-in-out;
   }
 
   p {
-    color: var(--gray-500);
-    font-size: 0.9rem;
+    color: var(--gray-400);
+    font-size: max(0.6rem, 1.25vmin);
+    font-weight: 700;
+    text-transform: uppercase;
     margin: 0;
   }
 
   section {
     display: flex;
-    gap:1rem;
+    gap: 0.5rem;
     margin-bottom: 1rem;
   }
 
   section [id^="player"] {
     flex-grow: 1;
     text-align: center;
-    padding: 1rem;
-
-    transition: background-color 0.5s ease-in-out;
   }
 
-  #player-x {
+  #player-x h2 {
     background-color: var(--bg-player-x);
     border: var(--border-player-x);
   }
 
-  #player-o {
+  #player-o h2 {
     background-color: var(--bg-player-o);
     border: var(--border-player-o);
   }

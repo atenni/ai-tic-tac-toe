@@ -3,9 +3,10 @@ import sounds from "../sounds";
 const style = `
   :host  {
     --width: 3rem;
-    --height: 1.5rem;
-    --bottom-inset: 2.1rem;
-    --right-inset: 3rem;
+    --height: max(1.5rem, 4vmin);
+    --icon-font-size: 1.15rem;
+    --bottom-inset: 1.25rem;
+    --right-inset: 2.5rem;
 
     position: absolute;
     bottom: var(--bottom-inset);
@@ -13,7 +14,16 @@ const style = `
 
     width: var(--width);
     height: var(--height);
+  }
 
+  @media (min-width: 768px) {
+    :host {
+      --width: 4rem;
+      // --height: 2.5rem;
+      --icon-font-size: 1.5rem;
+      --bottom-inset: 1.5rem;
+      --right-inset: 3rem;
+    }
   }
 
   label {
@@ -26,12 +36,11 @@ const style = `
     border-radius: var(--height);
     background: var(--rgb-color);
     box-shadow: inset 0 0 0.35rem var(--gray-800);
-    
   }
 
   label::before,
   label::after {
-    font-size: 1.15rem;
+    font-size: var(--icon-font-size);
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -41,40 +50,29 @@ const style = `
   label::before {
     content: "\\263C";
     right: 100%;
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
   /* Moon icon */
   label::after {
     content: "\\263E";
     left: 100%;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
 
   }
 
   /* Theme label */
   span {
-    --label-top-padding: 0.25rem;
-    --label-height: 1rem;
-    --font-size: 0.7rem;
-    --label-y-offset: calc(var(--height) + var(--label-top-padding));
-
-    color: var(--gray-500);
-    font-size: var(--font-size);
-    text-align: center;
-    text-transform: uppercase;
-
+    font-size: 0.3rem; /* Small to minimise chance of line wrapping */
+    color: transparent;  /* Hide from UI. aria-label is used for screen readers */
     position: absolute;
-    height: var(--label-height);
     width: 100%;
-    transform: translateY(var(--label-y-offset));
   }
 
   /* Ball toggle */
   span::after {
     --ball-padding: 3px;
     --diameter: calc(var(--height) - var(--ball-padding) * 2);
-    --ball-y-offset: calc(-1 * var(--label-y-offset) + var(--ball-padding));
 
     content: "";
     position: absolute;
@@ -82,15 +80,14 @@ const style = `
     
     width: var(--diameter);
     height: var(--diameter);
-    background: var(--gray-900);
+    background: var(--gray-800);
     border-radius: var(--diameter);
     box-shadow:
       inset 0 0 0   1px var(--gray-300),
       inset 0 0 2px 2px var(--gray-400),
       0 0 var(--ball-padding) var(--gray-300);
-      
 
-    transform: translateY(var(--ball-y-offset));
+    transform: translateY(var(--ball-padding));
     transition: all 150ms ease-in-out;
   }
 
