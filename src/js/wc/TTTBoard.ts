@@ -19,9 +19,7 @@ class TTTBoard extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
     shadow.innerHTML = `
       <style>${styles}</style>
-      <section>
-        <slot name="square"></slot>
-      </section>
+      <slot></slot>
     `;
   }
 
