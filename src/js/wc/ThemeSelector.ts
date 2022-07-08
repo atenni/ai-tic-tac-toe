@@ -3,7 +3,7 @@ import sounds from "../sounds";
 const style = `
   :host  {
     --width: 3rem;
-    --height: max(1.5rem, 4vmin);
+    --height: clamp(1.5rem, 4vmin, 2rem);
     --icon-font-size: 1.15rem;
     --bottom-inset: 1.25rem;
     --right-inset: 2.5rem;
@@ -12,14 +12,13 @@ const style = `
     bottom: var(--bottom-inset);
     right: var(--right-inset);
 
-    width: var(--width);
     height: var(--height);
+    aspect-ratio: 1.6;
   }
 
   @media (min-width: 768px) {
     :host {
       --width: 4rem;
-      // --height: 2.5rem;
       --icon-font-size: 1.5rem;
       --bottom-inset: 1.5rem;
       --right-inset: 3rem;
