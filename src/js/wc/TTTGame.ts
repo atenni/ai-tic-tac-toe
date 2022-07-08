@@ -13,18 +13,20 @@ const styles = `
     --game-padding:
         max(1rem, 5vw)
         max(2rem, 5vw);
-  }
 
-  :host {
     background-color: var(--gray-100);
     border: 1px solid var(--game-border-color);
     box-shadow: var(--game-box-shadow);
     padding: var(--game-padding);
-    width: max(220px, 45vmin);
-    // max-height: 75vh;
-    // height: clamp(423px, 0vh, 75vh);
+    width: max(220px, 40vmin);
     transform: translateY(-2.5vh);
+  }
 
+
+  @media (orientation: landscape) {
+    :host {
+      transform: translateY(0);
+    }
   }
 
   :host([data-current-player="x"]) {
