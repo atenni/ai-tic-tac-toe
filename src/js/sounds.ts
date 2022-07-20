@@ -4,14 +4,21 @@
 // masterGain.connect(ctx.destination);
 
 class Sounds {
-  ctx: AudioContext;
+  _ctx: AudioContext;
   masterGain: GainNode;
 
   constructor() {
-    this.ctx = new AudioContext();
+    this._ctx = new AudioContext();
     this.masterGain = this.ctx.createGain();
     this.masterGain.gain.setValueAtTime(0.15, 0);
     this.masterGain.connect(this.ctx.destination);
+  }
+
+  get ctx(): AudioContext {
+    if (this._ctx.state === "suspended") {
+      this._ctx.resume();
+    }
+    return this._ctx;
   }
 
   click(type?: "heavy") {
