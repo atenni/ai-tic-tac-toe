@@ -1,7 +1,8 @@
 {
-  "name": "vite",
+  "name": "ai-tic-tac-toe",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite serve",
     "dev:host": "vite serve --host",
@@ -9,7 +10,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "^4.5.4",
-    "vite": "^2.9.9"
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0",
+    "vitest": "^0.19.0"
   }
 }
