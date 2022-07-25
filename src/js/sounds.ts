@@ -1,7 +1,22 @@
-// const ctx = new AudioContext();
-// const masterGain = ctx.createGain();
-// masterGain.gain.setValueAtTime(0.1, 0);
-// masterGain.connect(ctx.destination);
+type MelodyStyle = "legato" | "staccato";
+
+type NoteDuration = "W" | "H" | "Q" | "E" | "S";
+
+interface Note {
+  pitch: number;
+  duration: NoteDuration;
+  gain?: number; // TODO: this should be named in a more musical manner
+  // dotted?: boolean;
+}
+
+interface Melody {
+  meta: {
+    // timeSignature: "4/4" | "3/4";
+    bpm: number;
+    style: MelodyStyle;
+  };
+  notes: Note[];
+}
 
 class Sounds {
   _ctx: AudioContext;
@@ -25,15 +40,15 @@ class Sounds {
 
   click(type?: "heavy") {
     // Config (default light click)
-    let freqLow = 164.81; // E3
-    let freqHigh = 3951.07; // B7
+    let freqLow = notes.get("E3")!;
+    let freqHigh = notes.get("B7")!;
     let volLow = 0.08;
     let volHigh = 0.1;
     let duration = 0.01;
 
     if (type == "heavy") {
-      freqLow = 164.81; // E3
-      freqHigh = 3951.07; // B7
+      freqLow = notes.get("E3")!;
+      freqHigh = notes.get("B7")!;
       volLow = 1;
       volHigh = 0.05;
       duration = 0.01;
@@ -135,11 +150,29 @@ class Sounds {
   }
 
   winner() {
-    const note1Freq = 493.88; // B4
-    const note2Freq = 329.63; // E4
-    const note3Freq = 659.25; // E5
+const notes = new Map<string, number>([
+  ["E3", 164.81],
+  ["B4", 493.88],
+  ["E4", 329.63],
+  ["E5", 659.25],
+  ["B7", 3951.07],
+]);
 
-    this.#threeNotes(note1Freq, note2Freq, note3Freq);
+function durationToSeconds(bpm: number, duration: NoteDuration): number {
+  const secondsPerBeat = 60 / bpm;
+  const secondsPerBar = secondsPerBeat * 4; // Assumes 4/4 time
+
+  switch (duration) {
+    case "W":
+      return secondsPerBar / 1;
+    case "H":
+      return secondsPerBar / 2;
+    case "Q":
+      return secondsPerBar / 4;
+    case "E":
+      return secondsPerBar / 8;
+    case "S":
+      return secondsPerBar / 16;
   }
 }
 
