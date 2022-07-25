@@ -21,12 +21,23 @@ interface Melody {
 class Sounds {
   _ctx: AudioContext;
   masterGain: GainNode;
+  compressor: DynamicsCompressorNode;
+  output: AudioNode;
 
   constructor() {
     this._ctx = new AudioContext();
+
     this.masterGain = this.ctx.createGain();
-    this.masterGain.gain.setValueAtTime(0.15, 0);
+    this.masterGain.gain.value = 0.5;
     this.masterGain.connect(this.ctx.destination);
+
+    // Use reasonably strong compression for UI feedback
+    this.compressor = this.ctx.createDynamicsCompressor();
+    this.compressor.threshold.value = -24;
+    this.compressor.knee.value = 10;
+    this.compressor.release.value = 0.5;
+    this.compressor.connect(this.masterGain);
+
     // Use a common connection point for all sounds before we route to output
     this.output = this.compressor;
   }
@@ -94,62 +105,79 @@ class Sounds {
     clickOscillatorHigh.stop(this.ctx.currentTime + duration);
   }
 
-  #threeNotes(note1Freq: number, note2Freq: number, note3Freq: number) {
-    // Config
-    const noteDuration = 0.075;
-    const lastNoteHold = noteDuration * 3;
-    const spaceDuration = 0.025;
-    const melodyGainLevel = 0.4;
-    const totalDuration = noteDuration * 2 + spaceDuration * 2 + lastNoteHold;
+  #playMelody(melody: Melody) {
+    const defaultGain = 0.4;
+    let melodyOffset = 0;
+    let noteOverlap = 0;
 
-    // Set it up
-    const note1Osc = this.ctx.createOscillator();
-    note1Osc.frequency.setValueAtTime(note1Freq, this.ctx.currentTime);
-    const note2Osc = this.ctx.createOscillator();
-    note2Osc.frequency.setValueAtTime(note2Freq, this.ctx.currentTime);
-    const note3Osc = this.ctx.createOscillator();
-    note3Osc.frequency.setValueAtTime(note3Freq, this.ctx.currentTime);
+    if (melody.meta.style === "staccato") {
+      noteOverlap = 0;
+    } else if (melody.meta.style === "legato") {
+      noteOverlap = 0.75;
+    }
 
-    const melodyGain = this.ctx.createGain();
-    melodyGain.gain.setValueAtTime(melodyGainLevel, this.ctx.currentTime);
-    melodyGain.gain.exponentialRampToValueAtTime(
-      melodyGainLevel * 0.1,
-      this.ctx.currentTime + totalDuration,
-    );
+    melody.notes.forEach((note) => {
+      const noteDuration = durationToSeconds(melody.meta.bpm, note.duration);
+      const startTime = this.ctx.currentTime + melodyOffset;
+      const stopTime = startTime + noteDuration;
 
-    // Wire it up
-    note1Osc.connect(melodyGain);
-    note2Osc.connect(melodyGain);
-    note3Osc.connect(melodyGain);
-    melodyGain.connect(this.masterGain);
+      // Set up nodes
+      const oscNode = this.ctx.createOscillator();
+      oscNode.frequency.value = note.pitch;
 
-    // Play it
-    note1Osc.start(this.ctx.currentTime);
-    note1Osc.stop(this.ctx.currentTime + noteDuration);
+      const gainNode = this.ctx.createGain();
+      gainNode.gain.setValueAtTime(
+        note.gain !== undefined ? note.gain : defaultGain,
+        startTime,
+      );
+      gainNode.gain.exponentialRampToValueAtTime(0.001, stopTime + noteOverlap);
 
-    note2Osc.start(this.ctx.currentTime + noteDuration + spaceDuration);
-    note2Osc.stop(
-      this.ctx.currentTime + noteDuration + spaceDuration + noteDuration,
-    );
+      // Wire up nodes
+      oscNode.connect(gainNode);
+      gainNode.connect(this.output);
 
-    note3Osc.start(
-      this.ctx.currentTime + noteDuration + spaceDuration + noteDuration +
-        spaceDuration,
-    );
-    note3Osc.stop(
-      this.ctx.currentTime + totalDuration,
-    );
+      // Play it
+      oscNode.start(startTime);
+      oscNode.stop(stopTime + noteOverlap);
+
+      // Update time
+      melodyOffset += noteDuration;
+    });
   }
 
   reset() {
-    const note1Freq = 659.25; // E5
-    const note2Freq = 493.88; // B4
-    const note3Freq = 329.63; // E4
+    const melody: Note[] = [
+      { pitch: notes.get("E5")!, duration: "S" },
+      { pitch: notes.get("B4")!, duration: "S" },
+      { pitch: notes.get("E4")!, duration: "H" },
+    ];
 
-    this.#threeNotes(note1Freq, note2Freq, note3Freq);
+    this.#playMelody({
+      notes: melody,
+      meta: {
+        bpm: 140,
+        style: "legato",
+      },
+    });
   }
 
   winner() {
+    const melody: Note[] = [
+      { pitch: notes.get("B4")!, duration: "S" },
+      { pitch: notes.get("E4")!, duration: "S" },
+      { pitch: notes.get("E5")!, duration: "H" },
+    ];
+
+    this.#playMelody({
+      notes: melody,
+      meta: {
+        bpm: 140,
+        style: "legato",
+      },
+    });
+  }
+}
+
 const notes = new Map<string, number>([
   ["E3", 164.81],
   ["B4", 493.88],
