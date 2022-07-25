@@ -12,6 +12,8 @@ class Sounds {
     this.masterGain = this.ctx.createGain();
     this.masterGain.gain.setValueAtTime(0.15, 0);
     this.masterGain.connect(this.ctx.destination);
+    // Use a common connection point for all sounds before we route to output
+    this.output = this.compressor;
   }
 
   get ctx(): AudioContext {
@@ -67,8 +69,8 @@ class Sounds {
     // Wire it up
     clickOscillatorLow.connect(clickGainLow);
     clickOscillatorHigh.connect(clickGainHigh);
-    clickGainLow.connect(this.masterGain);
-    clickGainHigh.connect(this.masterGain);
+    clickGainLow.connect(this.output);
+    clickGainHigh.connect(this.output);
 
     // Play it
     clickOscillatorLow.start();
