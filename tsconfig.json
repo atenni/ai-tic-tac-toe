@@ -16,10 +16,5 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
-  "include": ["src"],
-  "exclude": [
-    "vite",
-    "src/js/controller.ts",
-    "src/js/index.ts",
-    "src/js/models.ts"]
+  "include": ["src"]
 }
